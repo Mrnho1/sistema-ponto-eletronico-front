@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../shared/navbar/navbar';
 import { Toast } from '../../shared/toast/toast';
 
-
 @Component({
   selector: 'app-dashboard',
   imports: [FormsModule, CommonModule, NavbarComponent, Toast],
@@ -20,12 +19,10 @@ export class DashboardComponent implements OnInit {
   status = 'Fora do expediente';
 
   ultimoTipo: string | null = null;
-  botaoTexto = 'Clique para Entrar';
+  botaoTexto = 'Entrar!';
 
   historico: any[] = [];
   ultimoRegistro: any = null;
-
-  carregado = false;
 
   constructor(private pontoService: PontoService) {}
 
@@ -34,6 +31,9 @@ export class DashboardComponent implements OnInit {
     this.carregarHistorico();
   }
 
+  // =========================
+  // BANCO DE HORAS
+  // =========================
   carregarBancoHoras() {
     this.pontoService.getBancoHoras()
       .subscribe((res: any) => {
@@ -41,82 +41,104 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  // =========================
+  // HISTÓRICO DO DIA
+  // =========================
   carregarHistorico() {
-  this.pontoService.getHoje()
-    .subscribe((res: any[]) => {
+    this.pontoService.getHoje()
+      .subscribe((res: any[]) => {
 
-      this.historico = res;
+        this.historico = res;
 
-      if (res.length > 0) {
-        this.ultimoRegistro = res[res.length - 1];
-        this.ultimoTipo = this.ultimoRegistro.tipo;
-      } else {
-        // 🔥 PRIMEIRO ACESSO
-        this.ultimoRegistro = null;
-        this.ultimoTipo = null;
-      }
+        if (res.length > 0) {
+          this.ultimoRegistro = res[res.length - 1];
+          this.ultimoTipo = this.ultimoRegistro.tipo;
+        } else {
+          this.ultimoRegistro = null;
+          this.ultimoTipo = null;
+        }
 
-      // 🔥 DEFINE UI SEMPRE
-      this.status = this.ultimoTipo === 'ENTRADA'
-        ? 'Trabalhando'
-        : 'Fora do expediente';
+        this.atualizarUI();
+      });
+  }
 
-      this.botaoTexto = this.ultimoTipo === 'ENTRADA'
-        ? 'Registrar Saída'
-        : 'Registrar Entrada';
-    });
-}
+  // =========================
+  // REGRA DE UI (ÚNICA FONTE)
+  // =========================
+  private atualizarUI() {
 
+    if (!this.ultimoTipo) {
+      this.status = 'Não iniciado';
+      this.botaoTexto = 'Registrar Entrada';
+      return;
+    }
+
+    if (this.ultimoTipo === 'ENTRADA') {
+      this.status = 'Trabalhando';
+      this.botaoTexto = 'Registrar Saída';
+    } else {
+      this.status = 'Fora do expediente';
+      this.botaoTexto = 'Registrar Entrada';
+    }
+  }
+
+  // =========================
+  // BATER PONTO
+  // =========================
   baterPonto() {
 
-  let tipo = this.ultimoTipo === 'ENTRADA' ? 'SAIDA' : 'ENTRADA';
+  let tipo: 'ENTRADA' | 'SAIDA';
+
+  if (!this.ultimoTipo) {
+    tipo = 'ENTRADA';
+  } else {
+    tipo = this.ultimoTipo === 'ENTRADA' ? 'SAIDA' : 'ENTRADA';
+  }
 
   this.pontoService.baterPonto(tipo)
     .subscribe({
-      next: (res: any) => {
+      next: () => {
 
-  this.ultimoTipo = res.tipo;
+        // 🔥 TOAST AQUI (DEPOIS DO BACKEND CONFIRMAR)
+        this.toast.show(
+          tipo === 'ENTRADA'
+            ? 'Entrada registrada'
+            : 'Saída registrada',
+          'success'
+        );
 
-  if (res.tipo === 'ENTRADA') {
-    this.toast.show('Entrada registrada', 'success');
-  } else {
-    this.toast.show('Saída registrada', 'info');
-  }
-
-  this.status = res.tipo === 'ENTRADA'
-    ? 'Trabalhando'
-    : 'Fora do expediente';
-
-  this.botaoTexto = res.tipo === 'ENTRADA'
-    ? 'Registrar Saída'
-    : 'Registrar Entrada';
-
-  this.carregarBancoHoras();
-  this.carregarHistorico();
-},
+        this.carregarHistorico();
+        this.carregarBancoHoras();
+      },
 
       error: (err) => {
         console.error(err);
+
+        this.toast.show(
+          'Erro ao registrar ponto',
+          'error'
+        );
       }
     });
 }
-getBotaoClasse() {
 
-  // 🔵 PRIMEIRO ACESSO
-  if (!this.ultimoTipo) {
+  // =========================
+  // CSS DO BOTÃO
+  // =========================
+  getBotaoClasse() {
+
+    if (!this.ultimoTipo) {
+      return 'btn-azul';
+    }
+
+    if (this.ultimoTipo === 'SAIDA') {
+      return 'btn-verde';
+    }
+
+    if (this.ultimoTipo === 'ENTRADA') {
+      return 'btn-vermelho';
+    }
+
     return 'btn-azul';
   }
-
-  // 🟢 VAI REGISTRAR ENTRADA
-  if (this.ultimoTipo === 'SAIDA') {
-    return 'btn-verde';
-  }
-
-  // 🔴 VAI REGISTRAR SAÍDA
-  if (this.ultimoTipo === 'ENTRADA') {
-    return 'btn-vermelho';
-  }
-
-  return 'btn-azul';
-}
 }

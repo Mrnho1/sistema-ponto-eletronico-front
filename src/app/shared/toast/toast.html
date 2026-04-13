@@ -1,20 +1,4 @@
-<div *ngIf="visivel" class="toast" [ngClass]="tipo">
-
-  <!-- ÍCONE -->
-  <span class="icon">
-    <ng-container *ngIf="tipo === 'success'">✔️</ng-container>
-    <ng-container *ngIf="tipo === 'error'">❌</ng-container>
-    <ng-container *ngIf="tipo === 'info'">ℹ️</ng-container>
-  </span>
-
-  <!-- TEXTO -->
-  <span class="mensagem">
-    {{ mensagem }}
-  </span>
-
-  <!-- BOTÃO FECHAR -->
-  <button class="close" (click)="fechar()">
-    ✖
-  </button>
-
+<div class="toast" *ngIf="visivel" [ngClass]="tipo">
+  <span>{{ mensagem }}</span>
+  <button (click)="fechar()">×</button>
 </div>

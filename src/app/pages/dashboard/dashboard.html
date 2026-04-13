@@ -1,29 +1,30 @@
 <app-navbar></app-navbar>
 <app-toast></app-toast>
+
 <div class="container">
 
   <h2>Dashboard</h2>
 
-  <!-- CARD SALDO -->
+  <!-- SALDO -->
   <div class="card">
     <p>Saldo</p>
     <h3>{{ saldo }}</h3>
   </div>
 
-  <!-- CARD STATUS -->
+  <!-- STATUS -->
   <div class="card">
     <p>Status</p>
     <h3>{{ status }}</h3>
   </div>
 
-  <!-- BOTÃO -->
+  <!-- BOTÃO PRINCIPAL -->
   <button 
-  (click)="baterPonto()"  
-  class="btn"
-  [ngClass]="getBotaoClasse()"
->
-  {{ botaoTexto }}
-</button>
+    (click)="baterPonto()"  
+    class="btn"
+    [ngClass]="getBotaoClasse()"
+  >
+    {{ botaoTexto }}
+  </button>
 
   <!-- ÚLTIMO REGISTRO -->
   <div class="card" *ngIf="ultimoRegistro">
@@ -34,7 +35,7 @@
     </h3>
   </div>
 
-  <!-- HISTÓRICO -->
+  <!-- HISTÓRICO DO DIA -->
   <div class="card">
     <h3>Hoje</h3>
 

@@ -1,12 +1,12 @@
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './toast.html',
-  styleUrl: './toast.css',
+  styleUrl: './toast.css'
 })
 export class Toast {
 
@@ -16,30 +16,20 @@ export class Toast {
 
   private timeout: any;
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
   show(msg: string, tipo: 'success' | 'error' | 'info' = 'success') {
-
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-
     this.mensagem = msg;
     this.tipo = tipo;
     this.visivel = true;
 
-    this.cdr.markForCheck();
+    clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
       this.visivel = false;
-      this.cdr.markForCheck();
     }, 2500);
   }
 
   fechar() {
     this.visivel = false;
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
+    clearTimeout(this.timeout);
   }
 }

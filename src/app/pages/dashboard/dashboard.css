@@ -2,85 +2,96 @@
   max-width: 500px;
   margin: auto;
   padding: 20px;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #333;
 }
 
+/* CARDS */
 .card {
   background: #fff;
   border-radius: 12px;
   padding: 15px;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .card p {
   margin: 0;
   color: #777;
+  font-size: 14px;
 }
 
 .card h3 {
   margin: 5px 0 0;
+  color: #222;
 }
 
+/* BOTÃO */
 .btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border: none;
   border-radius: 10px;
   color: white;
   font-size: 16px;
   cursor: pointer;
   margin-bottom: 15px;
-  transition: 0.3s;
+  transition: all 0.25s ease;
+  font-weight: bold;
 }
 
-/* 🔵 PRIMEIRO */
+/* 🔵 INICIAL */
 .btn-azul {
   background: #007bff;
 }
 
 .btn-azul:hover {
   background: #0056b3;
+  transform: scale(1.02);
 }
 
-/* 🟢 ENTRADA */
+/* 🟢 ENTRADA (próxima ação = sair) */
 .btn-verde {
   background: #28a745;
 }
 
 .btn-verde:hover {
   background: #1e7e34;
+  transform: scale(1.02);
 }
 
-/* 🔴 SAÍDA */
+/* 🔴 SAÍDA (próxima ação = entrada) */
 .btn-vermelho {
   background: #dc3545;
 }
 
-.btn-vermelho:hover{
-  background: #a73641;
+.btn-vermelho:hover {
+  background: #a71d2a;
+  transform: scale(1.02);
 }
 
 /* HISTÓRICO */
 .item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #eee;
+  font-size: 14px;
 }
 
-/* CORES */
+/* CORES POR TIPO */
 .ENTRADA {
-  color: green;
+  color: #28a745;
   font-weight: bold;
 }
 
 .SAIDA {
-  color: red;
+  color: #dc3545;
   font-weight: bold;
 }
