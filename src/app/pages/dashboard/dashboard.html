@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+
+  <h2>Dashboard</h2>
+
+  <!-- CARD SALDO -->
+  <div class="card">
+    <p>Saldo</p>
+    <h3>{{ saldo }}</h3>
+  </div>
+
+  <!-- CARD STATUS -->
+  <div class="card">
+    <p>Status</p>
+    <h3>{{ status }}</h3>
+  </div>
+
+  <!-- BOTÃO -->
+  <button (click)="baterPonto()"  class="btn">
+  {{ botaoTexto }}
+</button>
+
+  <!-- ÚLTIMO REGISTRO -->
+  <div class="card" *ngIf="ultimoRegistro">
+    <p>Último registro</p>
+    <h3>
+      {{ ultimoRegistro.tipo }}
+      às {{ ultimoRegistro.dataHora | date:'HH:mm' }}
+    </h3>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="card">
+    <h3>Hoje</h3>
+
+    <div *ngFor="let p of historico"
+         class="item"
+         [ngClass]="p.tipo">
+
+      <span>{{ p.tipo }}</span>
+      <span>{{ p.dataHora | date:'HH:mm' }}</span>
+
+    </div>
+  </div>
+
+</div>
