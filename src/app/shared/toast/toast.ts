@@ -28,11 +28,11 @@ export class Toast {
     this.tipo = tipo;
     this.visivel = true;
 
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
 
     this.timeout = setTimeout(() => {
       this.visivel = false;
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     }, 2500);
   }
 

@@ -22,31 +22,29 @@
   animation: fadeIn 0.3s ease;
 }
 
-/* cores */
-.success {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-}
-
-.error {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
+/* 🔵 INFO (igual botão azul) */
 .info {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
 }
 
-/* ícone */
+/* 🟢 SUCCESS (igual botão verde) */
+.success {
+  background: linear-gradient(135deg, #28a745, #1e7e34);
+}
+
+/* 🔴 ERROR (igual botão vermelho) */
+.error {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
 .icon {
   font-size: 18px;
-  font-weight: bold;
 }
 
-/* texto ocupa espaço */
 .mensagem {
   flex: 1;
 }
 
-/* botão fechar */
 .close {
   background: rgba(255, 255, 255, 0.2);
   border: none;
@@ -61,7 +59,6 @@
   background: rgba(255, 255, 255, 0.35);
 }
 
-/* animação */
 @keyframes fadeIn {
   from {
     opacity: 0;
