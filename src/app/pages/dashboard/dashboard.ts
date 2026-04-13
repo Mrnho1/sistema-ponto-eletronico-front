@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   status = 'Fora do expediente';
 
   ultimoTipo: string | null = null;
-  botaoTexto = 'Clique para Entrar!';
+  botaoTexto = 'Clique para Entrar';
 
   historico: any[] = [];
   ultimoRegistro: any = null;
@@ -75,33 +75,28 @@ export class DashboardComponent implements OnInit {
     .subscribe({
       next: (res: any) => {
 
-        this.ultimoTipo = res.tipo;
+  this.ultimoTipo = res.tipo;
 
-        this.status = res.tipo === 'ENTRADA'
-          ? 'Trabalhando'
-          : 'Fora do expediente';
+  if (res.tipo === 'ENTRADA') {
+    this.toast.show('Entrada registrada', 'success');
+  } else {
+    this.toast.show('Saída registrada', 'info');
+  }
 
-        this.botaoTexto = res.tipo === 'ENTRADA'
-          ? 'Registrar Saída'
-          : 'Registrar Entrada';
+  this.status = res.tipo === 'ENTRADA'
+    ? 'Trabalhando'
+    : 'Fora do expediente';
 
+  this.botaoTexto = res.tipo === 'ENTRADA'
+    ? 'Registrar Saída'
+    : 'Registrar Entrada';
 
-        this.toast?.show(
-          res.tipo === 'ENTRADA'
-            ? 'Entrada registrada com sucesso'
-            : 'Saída registrada com sucesso',
-          'success'
-        );
-
-        this.carregarBancoHoras();
-        this.carregarHistorico();
-      },
+  this.carregarBancoHoras();
+  this.carregarHistorico();
+},
 
       error: (err) => {
         console.error(err);
-
-
-        this.toast?.show('Erro ao bater ponto', 'error');
       }
     });
 }

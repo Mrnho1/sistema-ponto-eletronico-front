@@ -11,14 +11,14 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 export class Toast {
 
   mensagem = '';
-  tipo: 'success' | 'error' = 'success';
+  tipo: 'success' | 'error' | 'info' = 'success';
   visivel = false;
 
   private timeout: any;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  show(msg: string, tipo: 'success' | 'error' = 'success') {
+  show(msg: string, tipo: 'success' | 'error' | 'info' = 'success') {
 
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -28,11 +28,18 @@ export class Toast {
     this.tipo = tipo;
     this.visivel = true;
 
-    this.cdr.detectChanges(); // 🔥 força aparecer
+    this.cdr.detectChanges();
 
     this.timeout = setTimeout(() => {
       this.visivel = false;
-      this.cdr.detectChanges(); // 🔥 força sumir
+      this.cdr.detectChanges();
     }, 2500);
+  }
+
+  fechar() {
+    this.visivel = false;
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 }
