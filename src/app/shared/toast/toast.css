@@ -1,0 +1,29 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  z-index: 9999;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.toast.success,
+.toast.error {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.success {
+  background: #22c55e;
+}
+
+.error {
+  background: #ef4444;
+}

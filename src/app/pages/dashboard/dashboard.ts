@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PontoService } from '../../services/ponto';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../shared/navbar/navbar';
+import { Toast } from '../../shared/toast/toast';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [FormsModule, CommonModule, NavbarComponent],
+  imports: [FormsModule, CommonModule, NavbarComponent, Toast],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild(Toast) toast!: Toast;
+
   saldo = '';
   status = 'Fora do expediente';
 
   ultimoTipo: string | null = null;
-  botaoTexto = 'Bater Ponto';
+  botaoTexto = 'Clique para Entrar!';
 
   historico: any[] = [];
   ultimoRegistro: any = null;
@@ -82,13 +85,23 @@ export class DashboardComponent implements OnInit {
           ? 'Registrar Saída'
           : 'Registrar Entrada';
 
+
+        this.toast?.show(
+          res.tipo === 'ENTRADA'
+            ? 'Entrada registrada com sucesso'
+            : 'Saída registrada com sucesso',
+          'success'
+        );
+
         this.carregarBancoHoras();
         this.carregarHistorico();
       },
 
       error: (err) => {
         console.error(err);
-        alert('Erro ao bater ponto');
+
+
+        this.toast?.show('Erro ao bater ponto', 'error');
       }
     });
 }
