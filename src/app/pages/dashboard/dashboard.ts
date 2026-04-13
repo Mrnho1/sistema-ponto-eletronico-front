@@ -100,4 +100,23 @@ export class DashboardComponent implements OnInit {
       }
     });
 }
+getBotaoClasse() {
+
+  // 🔵 PRIMEIRO ACESSO
+  if (!this.ultimoTipo) {
+    return 'btn-azul';
+  }
+
+  // 🟢 VAI REGISTRAR ENTRADA
+  if (this.ultimoTipo === 'SAIDA') {
+    return 'btn-verde';
+  }
+
+  // 🔴 VAI REGISTRAR SAÍDA
+  if (this.ultimoTipo === 'ENTRADA') {
+    return 'btn-vermelho';
+  }
+
+  return 'btn-azul';
+}
 }
