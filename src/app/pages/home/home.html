@@ -1,1 +1,36 @@
-<p>home works!</p>
+<div class="container">
+
+  <h2>Home</h2>
+
+  <!-- <button (click)="logout()">Logout</button> -->
+
+  <!-- SALDO -->
+  <div class="card">
+    <p>Saldo</p>
+    <h3>{{ saldo }}</h3>
+  </div>
+
+  <!-- BOTÃO -->
+  <button (click)="baterPonto()">
+    Bater Ponto
+  </button>
+
+  <!-- ÚLTIMO REGISTRO -->
+  <div *ngIf="ultimoRegistro" class="card">
+    <p>Último registro</p>
+    <h3>
+      {{ ultimoRegistro.tipo }} às
+      {{ ultimoRegistro.dataHora | date:'HH:mm' }}
+    </h3>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="card">
+    <h3>Hoje</h3>
+
+    <div *ngFor="let p of historico">
+      {{ p.tipo }} - {{ p.dataHora | date:'HH:mm' }}
+    </div>
+  </div>
+
+</div>

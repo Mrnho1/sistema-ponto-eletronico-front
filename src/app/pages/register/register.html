@@ -1,7 +1,14 @@
-<h2>Cadastro</h2>
+<div class="container">
+  <h2>Cadastro</h2>
 
-<input placeholder="Nome" [(ngModel)]="nome">
-<input placeholder="Email" [(ngModel)]="email">
-<input placeholder="Senha" type="password" [(ngModel)]="senha">
+  <input [(ngModel)]="nome" placeholder="Nome" />
+  <input [(ngModel)]="email" placeholder="Email" />
+  <input [(ngModel)]="senha" type="password" placeholder="Senha" />
 
-<button (click)="cadastrar()">Cadastrar</button>
+  <button (click)="register()">Cadastrar</button>
+
+  <p>
+    Já tem conta?
+    <a routerLink="/login">Login</a>
+  </p>
+</div>

@@ -1,6 +1,13 @@
-<h2>Login</h2>
+<div class="container">
+  <h2>Login</h2>
 
-<input placeholder="Email" [(ngModel)]="email">
-<input type="password" placeholder="Senha" [(ngModel)]="senha">
+  <input [(ngModel)]="email" placeholder="Email" />
+  <input [(ngModel)]="senha" type="password" placeholder="Senha" />
 
-<button (click)="login()">Entrar</button>
+  <button (click)="login()">Entrar</button>
+
+  <p>
+    Não tem conta?
+    <a routerLink="/register">Cadastrar</a>
+  </p>
+</div>

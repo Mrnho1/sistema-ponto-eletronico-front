@@ -1,30 +1,38 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-export class RegisterComponent {
-
+export class Register {
   nome = '';
   email = '';
   senha = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
-  cadastrar() {
-    this.http.post('http://localhost:8080/funcionarios', {
+  register() {
+    this.auth.register({
       nome: this.nome,
       email: this.email,
-      senha: this.senha,
-      role: 'USER'
+      senha: this.senha
     }).subscribe({
-      next: (res) => console.log('CADASTRADO', res),
-      error: (err) => console.error('ERRO', err)
+      next: () => {
+        alert('Cadastro realizado!');
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        alert('Erro ao cadastrar');
+      }
     });
   }
 }

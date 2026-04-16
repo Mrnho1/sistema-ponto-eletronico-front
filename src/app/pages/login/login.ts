@@ -1,34 +1,37 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class LoginComponent {
+export class Login{
 
   email = '';
   senha = '';
 
-constructor(
-  private authService: AuthService,
-  private router: Router
-) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   login() {
-    this.authService.login({
+    this.auth.login({
       email: this.email,
       senha: this.senha
     }).subscribe({
       next: (res: any) => {
-        localStorage.setItem('token', res.token);
-        this.router.navigate(['/dashboard']);
+        this.auth.salvarToken(res.token);
+        this.router.navigate(['/home']);
       },
-      error: (err) => console.error(err)
+      error: () => {
+        alert('Login inválido');
+      }
     });
   }
 }
